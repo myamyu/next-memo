@@ -1,0 +1,31 @@
+@endpoint = http://localhost:3001/memos
+
+GET {{endpoint}}/
+
+###
+
+POST {{endpoint}}/
+Content-Type: application/json
+
+{
+  "title": "ほげ",
+  "description": "ふが"
+}
+
+###
+
+PUT {{endpoint}}/1
+Content-Type: application/json
+
+{
+  "title": "ほげ2",
+  "description": "ふが2"
+}
+
+###
+
+DELETE {{endpoint}}/0
+
+###
+
+DELETE {{endpoint}}/abc

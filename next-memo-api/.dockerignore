@@ -1,0 +1,9 @@
+.git/
+dist/
+node_modules/
+test/
+.eslintrc.js
+.gitignore
+.prettierrc
+*.http
+*.md
