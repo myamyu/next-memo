@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import {MemoPropertyDto} from './memos.dto';
-import {Memo} from './memos.entity';
+import { MemoPropertyDto } from './memos.dto';
+import { Memo } from './memos.entity';
 
 @Injectable()
 export class MemosService {

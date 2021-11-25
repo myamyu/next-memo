@@ -4,6 +4,6 @@ import { MemosService } from './memos.service';
 
 @Module({
   controllers: [MemosController],
-  providers: [MemosService]
+  providers: [MemosService],
 })
 export class MemosModule {}
