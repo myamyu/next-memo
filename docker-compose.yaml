@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  memo-api:
+    container_name: memo-api
+    build: ./next-memo-api
+    image: memo-api
+    ports:
+      - 3001:3001
+
+  memo-front:
+    container_name: memo-front
+    build: ./next-memo-front
+    image: memo-front
+    ports:
+      - 3002:3000
