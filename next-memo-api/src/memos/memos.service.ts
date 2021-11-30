@@ -4,7 +4,7 @@ import { Memo } from './memos.entity';
 
 @Injectable()
 export class MemosService {
-  private lastId: number = 0;
+  private lastId = 0;
   private memos: Memo[] = [];
 
   async getMemos(): Promise<Memo[]> {
