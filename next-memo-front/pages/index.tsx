@@ -1,8 +1,16 @@
-import type { NextPage } from 'next'
 import Head from 'next/head'
-import {Memos} from '../components/memos';
+import Memos from '../components/memos2';
+import { InferGetServerSidePropsType } from 'next'
 
-const Home: NextPage = () => {
+export const getServerSideProps = async () => {
+  const res = await fetch('http://localhost:3000/api/memo/');
+  const data = await res.json();
+  const memos = data as Memo[];
+
+  return {props: {memos}};
+};
+
+const Home = ({memos}:InferGetServerSidePropsType<typeof getServerSideProps>) => {
   return (
     <div>
       <Head>
@@ -13,7 +21,7 @@ const Home: NextPage = () => {
         <p>Next.jsを試したかったので作ったメモアプリ。</p>
       </header>
       <main>
-        <Memos />
+        <Memos memos={memos} />
       </main>
       <footer>
 
