@@ -1,5 +1,6 @@
-import React from "react";
-import useSWR from "swr";
+import React from 'react';
+import useSWR from 'swr';
+import LfToBr from './lf-to-br';
 
 const fetcher = (url: string) => {
   return fetch(url)
@@ -7,11 +8,6 @@ const fetcher = (url: string) => {
       return res.json();
     });
 };
-
-// 改行を<br>に
-const LfToBr = (text:string) => text
-  .split('\n')
-  .map((s, i) => <React.Fragment key={i}>{i === 0 ? '' : <br />}{s}</React.Fragment>);
 
 const Memos = () => {
   const {data, error} = useSWR('/api/memo/', fetcher)
@@ -26,7 +22,7 @@ const Memos = () => {
           return (
             <li key={memo.id}>
               <h3>{memo.title}</h3>
-              <p>{LfToBr(memo.description)}</p>
+              <p><LfToBr text={memo.description} /></p>
             </li>
           );
         })

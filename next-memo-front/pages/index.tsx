@@ -1,16 +1,8 @@
-import Head from 'next/head'
-import Memos from '../components/memos2';
-import { InferGetServerSidePropsType } from 'next'
+import Head from 'next/head';
+import Link from 'next/link';
+import {Memos} from '../components/memos';
 
-export const getServerSideProps = async () => {
-  const res = await fetch('http://localhost:3000/api/memo/');
-  const data = await res.json();
-  const memos = data as Memo[];
-
-  return {props: {memos}};
-};
-
-const Home = ({memos}:InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const Home = () => {
   return (
     <div>
       <Head>
@@ -21,11 +13,11 @@ const Home = ({memos}:InferGetServerSidePropsType<typeof getServerSideProps>) =>
         <p>Next.jsを試したかったので作ったメモアプリ。</p>
       </header>
       <main>
-        <Memos memos={memos} />
+        <div>
+          <Link href="/add"><a>追加</a></Link>
+        </div>
+        <Memos />
       </main>
-      <footer>
-
-      </footer>
     </div>
   )
 }
