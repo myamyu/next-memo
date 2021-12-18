@@ -20,19 +20,22 @@ export class MemosService {
     return Promise.resolve(memo);
   }
 
-  async updateMemo(id: number, dto: MemoPropertyDto): Promise<void> {
+  async getMemo(id: number): Promise<Memo | null> {
     const memo = this.memos.find((m) => m.id === id);
-    if (!memo) return Promise.reject(new Error(`id [${id}] が見つからない`));
+    return Promise.resolve(memo || null);
+  }
 
+  async updateMemo(id: number, dto: MemoPropertyDto): Promise<void> {
+    const memo = await this.getMemo(id);
+    if (!memo) return Promise.reject(new Error(`id [${id}] が見つからない`));
     memo.title = dto.title;
     memo.description = dto.description;
     return Promise.resolve();
   }
 
   async deleteMemo(id: number): Promise<void> {
-    const memo = this.memos.find((m) => m.id === id);
+    const memo = await this.getMemo(id);
     if (!memo) return Promise.reject(new Error(`id [${id}] が見つからない`));
-
     this.memos = this.memos.filter((m) => m.id !== id);
     return Promise.resolve();
   }

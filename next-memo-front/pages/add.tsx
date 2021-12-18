@@ -12,9 +12,11 @@ export default function Add() {
       },
       body: JSON.stringify(memo),
     });
-    if (res.ok) {
-      router.push('/');
+
+    if (!res.ok) {
+      return;
     }
+    router.push('/');
   };
 
   return (

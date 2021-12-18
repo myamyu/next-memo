@@ -4,17 +4,18 @@ const endpoint = process.env.MEMO_API_ENDPOINT || 'http://localhost:3001/memos';
 type Handler = (req: NextApiRequest, res: NextApiResponse) => Promise<void>;
 
 const methods:{[key: string]:Handler} = {
-  'get': async (req: NextApiRequest, res: NextApiResponse<Memo[]|null>) => {
+  'get': async (req: NextApiRequest, res: NextApiResponse<Memo[]>) => {
     const apiRes = await fetch(`${endpoint}/`);
     if (!apiRes.ok) {
-      res.status(500).send(null);
+      console.error(`API Error ${apiRes.status}`);
+      res.status(apiRes.status || 500).end();
       return;
     }
 
     const apiResData = await apiRes.json();
     res.status(200).json(apiResData as Memo[]);
   },
-  'post': async (req: NextApiRequest, res: NextApiResponse<Memo|null>) => {
+  'post': async (req: NextApiRequest, res: NextApiResponse<Memo|string>) => {
     const apiRes = await fetch(`${endpoint}/`, {
       method: 'post',
       headers: {
@@ -23,7 +24,7 @@ const methods:{[key: string]:Handler} = {
       body: JSON.stringify(req.body),
     });
     if (!apiRes.ok) {
-      res.status(500).send(null);
+      res.status(500).send(`API Error status ${apiRes.status}`);
       return;
     }
     const apiResData = await apiRes.json();

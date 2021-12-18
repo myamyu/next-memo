@@ -9,6 +9,7 @@ import {
   Put,
   UsePipes,
   ValidationPipe,
+  Res,
 } from '@nestjs/common';
 import { MemoPropertyDto } from './memos.dto';
 import { MemosService } from './memos.service';
@@ -27,6 +28,20 @@ export class MemosController {
   @UsePipes(ValidationPipe)
   createMemo(@Body() memo: MemoPropertyDto): Promise<Memo> {
     return this.memosService.createMemo(memo);
+  }
+
+  @Get('/:id')
+  async getMemo(
+    @Res() res,
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<Memo> {
+    const memo = await this.memosService.getMemo(id);
+    if (!memo) {
+      res.status(404).send();
+      return;
+    }
+    res.status(200).send(memo);
+    return;
   }
 
   @Delete('/:id')
