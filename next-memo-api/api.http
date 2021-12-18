@@ -1,4 +1,4 @@
-@endpoint = http://localhost:3002/memos
+@endpoint = http://localhost:3001/memos
 
 GET {{endpoint}}/
 

@@ -1,28 +1,33 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
+const endpoint = process.env.MEMO_API_ENDPOINT || 'http://localhost:3001/memos';
 
 type Handler = (req: NextApiRequest, res: NextApiResponse) => Promise<void>;
+
 const methods:{[key: string]:Handler} = {
-  'get': async (req: NextApiRequest, res: NextApiResponse<Memo[]>) => {
-    await (
-      new Promise<void>((resolve) => {
-        setTimeout(() => {
-          resolve();
-        }, 800);
-      })
-    );
-    res.status(200)
-      .json([
-        {id: 0, title: 'めもめも', description: 'あいうえお\nかきくけこ'},
-        {id: 1, title: 'めもめも2', description: 'あいうえお\nかきくけこ'},
-        {id: 2, title: 'めもめも3', description: 'あいうえお\nかきくけこ'},
-        {id: 3, title: 'めもめも3', description: 'あいうえお,かきくけこ'},
-      ]);
+  'get': async (req: NextApiRequest, res: NextApiResponse<Memo[]|null>) => {
+    const apiRes = await fetch(`${endpoint}/`);
+    if (!apiRes.ok) {
+      res.status(500).send(null);
+      return;
+    }
+
+    const apiResData = await apiRes.json();
+    res.status(200).json(apiResData as Memo[]);
   },
-  'post': async (req: NextApiRequest, res: NextApiResponse<Memo>) => {
-    res.status(200)
-      .json(
-        {id: 0, title: 'めもめも', description: 'あいうえお\nかきくけこ'},
-      );
+  'post': async (req: NextApiRequest, res: NextApiResponse<Memo|null>) => {
+    const apiRes = await fetch(`${endpoint}/`, {
+      method: 'post',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify(req.body),
+    });
+    if (!apiRes.ok) {
+      res.status(500).send(null);
+      return;
+    }
+    const apiResData = await apiRes.json();
+    res.status(200).json(apiResData as Memo);
   },
 }
 
