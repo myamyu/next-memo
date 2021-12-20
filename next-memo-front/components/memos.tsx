@@ -2,6 +2,7 @@ import React from 'react';
 import useSWR from 'swr';
 import Link from 'next/link';
 import LfToBr from './lf-to-br';
+import { useRouter } from 'next/router';
 
 const fetcher = (url: string) => {
   return fetch(url)
@@ -10,11 +11,26 @@ const fetcher = (url: string) => {
     });
 };
 
-const Memos = () => {
-  const {data, error} = useSWR('/api/memo/', fetcher)
+export default function Memos() {
+  const router = useRouter();
+  const {data, error} = useSWR('/api/memo', fetcher)
   if (error) return <div>えらーだ!!!</div>
   if (!data) return <div>ロード中…</div>
   const memos = data as Memo[];
+
+  const deleteMemo = async (id?: number) => {
+    if (typeof id === 'undefined') return;
+
+    const res = await fetch(`/api/memo/${id}`, {
+      method: 'delete',
+    });
+
+    if (!res.ok) {
+      // TODO エラー処理入れる
+      return;
+    }
+    router.reload();
+  };
 
   return (
     <ul>
@@ -26,6 +42,7 @@ const Memos = () => {
               <p><LfToBr text={memo.description} /></p>
               <div>
                 <Link href={`/memo/${memo.id}/edit`}><a>編集</a></Link>
+                <button onClick={() => deleteMemo(memo.id)}>削除</button>
               </div>
             </li>
           );
@@ -33,8 +50,4 @@ const Memos = () => {
       }
     </ul>
   )
-};
-
-export {
-  Memos,
 };

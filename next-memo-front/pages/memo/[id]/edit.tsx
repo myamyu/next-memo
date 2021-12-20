@@ -18,13 +18,17 @@ export default function Edit() {
     });
 
     if (!res.ok) {
+      // TODO エラー処理入れる
       return;
     }
     router.push('/');
   };
 
   useEffect(() => {
+    let unmounted = false;
+
     (async () => {
+      if (unmounted) return;
       const apiRes = await fetch(`/api/memo/${id}`);
       if (!apiRes.ok) {
         // TODO エラー処理なんか考える
@@ -32,6 +36,10 @@ export default function Edit() {
       }
       setMemo(await apiRes.json() as Memo);
     })();
+
+    return () => {
+      unmounted = true;
+    }
   });
 
   return (

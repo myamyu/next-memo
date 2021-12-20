@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import Link from 'next/link';
-import {Memos} from '../components/memos';
+import Memos from '../components/memos';
 
 const Home = () => {
   return (
