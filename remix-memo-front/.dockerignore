@@ -6,5 +6,5 @@ node_modules/
 *.md
 
 /.cache
-/build
 /public/build
+/server/build
