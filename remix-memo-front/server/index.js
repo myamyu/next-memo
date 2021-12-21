@@ -1,3 +1,4 @@
+/* eslint-disable node/no-unpublished-require */
 /* eslint-disable node/no-missing-require */
 const path = require('path');
 const express = require('express');
