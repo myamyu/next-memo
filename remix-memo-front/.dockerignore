@@ -1,0 +1,10 @@
+node_modules/
+.eslintrc.json
+.gitignore
+.nvmrc
+.prettierrc.js
+*.md
+
+/.cache
+/build
+/public/build
