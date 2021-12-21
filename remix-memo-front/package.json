@@ -5,10 +5,10 @@
   "license": "",
   "scripts": {
     "build": "remix build",
-    "dev": "remix watch",
+    "dev": "cross-env PORT=3002 remix dev",
+    "watch": "remix watch",
     "postinstall": "remix setup node",
     "start": "cross-env NODE_ENV=production node server/index.js",
-    "start:dev": "cross-env NODE_ENV=development node server/index.js",
     "lint": "gts lint",
     "clean": "gts clean",
     "fix": "gts fix"
@@ -16,6 +16,7 @@
   "dependencies": {
     "@remix-run/express": "^1.1.1",
     "@remix-run/react": "^1.1.1",
+    "@remix-run/serve": "^1.1.1",
     "compression": "^1.7.4",
     "cross-env": "^7.0.3",
     "express": "^4.17.1",

@@ -18,7 +18,7 @@ app.use(express.static('public', {maxAge: '1h'}));
 // Remix fingerprints its assets so we can cache forever
 app.use(express.static('public/build', {immutable: true, maxAge: '1y'}));
 
-app.use(morgan('tiny'));
+app.use(morgan('short'));
 app.all(
   '*',
   MODE === 'production'
