@@ -40,7 +40,7 @@ export default function Edit() {
     return () => {
       unmounted = true;
     }
-  });
+  }, []);
 
   return (
     <div>

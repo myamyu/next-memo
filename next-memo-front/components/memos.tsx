@@ -13,10 +13,9 @@ const fetcher = (url: string) => {
 
 export default function Memos() {
   const router = useRouter();
-  const {data, error} = useSWR('/api/memo', fetcher)
+  const {data, error, mutate} = useSWR<Memo[]>('/api/memo', fetcher)
   if (error) return <div>えらーだ!!!</div>
   if (!data) return <div>ロード中…</div>
-  const memos = data as Memo[];
 
   const deleteMemo = async (id?: number) => {
     if (typeof id === 'undefined') return;
@@ -29,13 +28,13 @@ export default function Memos() {
       // TODO エラー処理入れる
       return;
     }
-    router.reload();
+    await mutate();
   };
 
   return (
     <ul>
       {
-        memos.map((memo) => {
+        data.map((memo) => {
           return (
             <li key={memo.id}>
               <h3>{memo.title}</h3>
